@@ -24,12 +24,14 @@ def run(q):
     items = select(soup, 'ul.listContent li')
     for item in items:
         try:
+            deal_date = select(item, 'div.dealDate')[0].text
             title = select(item, 'div.title a')[0].text
-            price = select(item, 'div.totalPrice span')[0].text
+            price = select(item, 'div.totalPrice')[0].text
+            unit_price = select(item, 'div.unitPrice')[0].text
             link = select(item, 'div.title a')[0].text
             kwargs = {
                 'title': title,
-                'subtitle': price,
+                'subtitle': deal_date + '成交' + ' ' + price + ' ' + unit_price,
                 'arg': link,
             }
             fb.addItem(**kwargs)
