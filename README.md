@@ -1,4 +1,4 @@
-# 北京链家成交价格查询 Workflow
+# 北京链家成交价格查询 Alfred.Workflow
 
 ```raw
 @author  lzw.whu@gmail.com
