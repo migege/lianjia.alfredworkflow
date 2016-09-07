@@ -42,5 +42,7 @@ def run(q):
 
 
 if __name__ == '__main__':
-    query = "{query}"
+    if len(sys.argv) < 2:
+        sys.exit()
+    query = sys.argv[1]
     run(query)
