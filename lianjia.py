@@ -28,7 +28,7 @@ def run(q):
             title = select(item, 'div.title a')[0].text
             price = select(item, 'div.totalPrice')[0].text
             unit_price = select(item, 'div.unitPrice')[0].text
-            link = select(item, 'div.title a')[0].text
+            link = select(item, 'div.title a')[0]['href']
             kwargs = {
                 'title': title,
                 'subtitle': deal_date + '成交' + ' ' + price + ' ' + unit_price,
