@@ -16,22 +16,33 @@ def run(q):
     fb = Feedback()
 
     q = q.strip()
-    url = 'http://bj.lianjia.com/chengjiao/rs%s' % q
-    r = requests.get(url)
+    url = 'http://m.lianjia.com/bj/chengjiao/rs%s' % q
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+        'Referer': 'https://m.lianjia.com/bj/sold/search/',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, sdch, br',
+        'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,zh-TW;q=0.2',
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+    }
+    r = requests.get(url, headers=headers)
     r.encoding = 'utf8'
     content = r.text
     soup = Soup(content)
-    items = select(soup, 'ul.listContent li')
+    items = select(soup, 'ul.lists li.pictext')
     for item in items:
         try:
-            deal_date = select(item, 'div.dealDate')[0].text
-            title = select(item, 'div.title a')[0].text
-            price = select(item, 'div.totalPrice')[0].text
-            unit_price = select(item, 'div.unitPrice')[0].text
-            link = select(item, 'div.title a')[0]['href']
+            deal_date = select(item, 'div.item_date')[0].text
+            title = select(item, 'div.item_main')[0].text
+            desc = select(item, 'span.q_oriention')[0].text
+            price = select(item, 'span.price_total')[0].text
+            unit_price = select(item, 'span.unit_price')[0].text
+            link = select(item, 'a.flexbox')[0]['href']
             kwargs = {
-                'title': title,
-                'subtitle': deal_date + '成交' + ' ' + price + ' ' + unit_price,
+                'title': title + ' ' + price + ' ' + unit_price,
+                'subtitle': deal_date + '成交' + ' ' + '位置：' + desc,
                 'arg': link,
             }
             fb.addItem(**kwargs)
