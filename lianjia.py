@@ -43,7 +43,7 @@ def run(q):
             kwargs = {
                 'title': title + ' ' + price + ' ' + unit_price,
                 'subtitle': deal_date + '成交' + ' ' + '位置：' + desc,
-                'arg': link,
+                'arg': 'https://m.lianjia.com' + link,
             }
             fb.addItem(**kwargs)
         except:
